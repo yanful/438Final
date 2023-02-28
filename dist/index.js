@@ -155,7 +155,7 @@ window.draw = () => {
       groundSprites.add(firstGroundSprite);
     }
     if (random() > 0.995) {
-      let new_Gooma = new GoomaMonster.Sprite(width, height-100, 50, 50);
+      let new_Gooma = new GoomaMonster.Sprite(width, height-100, 100, 100);
       // new GoomaMonster.Sprite(width, height-100, 50, 50);
       // Gooma = createSprite(width,height-100,50,50);
       // Gooma.addAnimation("running", Gooma_running);
@@ -163,7 +163,7 @@ window.draw = () => {
       // GoomaMonster.add(Gooma)
     }
     if (random() > 0.995) {
-      let new_fly = new flyMonster.Sprite(width, random(height-400, height - 200), 50, 50);
+      let new_fly = new flyMonster.Sprite(width, random(height-400, height - 200), 100, 100);
       new_fly.scale = 0.3;
     }
     for (var i = 0; i < GoomaMonster.length; i++) {
