@@ -16,6 +16,7 @@ var MarioBullets = [];
 var fly_running;
 var flyMonster;
 let backgroundImage;
+let monsterDelay = -1;
 
 window.preload = () => {
   mario_running = loadAnimation("Capture1.png","Capture3.png","Capture4.png");
@@ -71,13 +72,14 @@ window.draw = () => {
     flyMonster.remove();
     console.log(MarioBullets);
     for (var i = 0; i < MarioBullets.length; i++) {
-      MarioBullets[i].remove();
+      MarioBullets[i].visible = false;
     }
     if (mouseIsPressed) {
       
       console.log("click");
       isGameOver = false;
-      score = 0;
+      score = 3;
+      monsterDelay = -1;
       background(150, 200, 250);
       groundSprites = new Group();
       numGroundSprites = width / GROUND_SPRITE_WIDTH + 1;
@@ -112,6 +114,9 @@ window.draw = () => {
     mario.addSpeed(0.25, 90);
     mario.addSpeed(0.1, 0);
     mario.position.x = mario.position.x + 3;
+    if (monsterDelay === -1) {
+      monsterDelay = frameCount + 60 * 5;
+    }
     if (kb.presses('w') && mario.position.y >= height - 100) {
       mario.velocity.y = JUMP;
 
@@ -164,18 +169,21 @@ window.draw = () => {
       firstGroundSprite.position.y = height - 10;
       groundSprites.add(firstGroundSprite);
     }
-    if (random() > 0.995) {
-      let new_Gooma = new GoomaMonster.Sprite(width, height-100, 100, 100);
+    if (frameCount >= monsterDelay) {
+      if (random() > 0.995) {
+        let new_Gooma = new GoomaMonster.Sprite(width, height-100, 100, 100);
       // new GoomaMonster.Sprite(width, height-100, 50, 50);
       // Gooma = createSprite(width,height-100,50,50);
       // Gooma.addAnimation("running", Gooma_running);
-      new_Gooma.scale = 0.3;
+        new_Gooma.scale = 0.3;
       // GoomaMonster.add(Gooma)
+      }
+      if (random() > 0.995) {
+        let new_fly = new flyMonster.Sprite(width, random(height-400, height - 200), 100, 100);
+        new_fly.scale = 0.3;
+      }
     }
-    if (random() > 0.995) {
-      let new_fly = new flyMonster.Sprite(width, random(height-400, height - 200), 100, 100);
-      new_fly.scale = 0.3;
-    }
+
     for (var i = 0; i < GoomaMonster.length; i++) {
       GoomaMonster[i].position.x -= 5;
       // GoomaMonster[i].overlap(mario, endGame);
