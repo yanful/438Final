@@ -15,11 +15,13 @@ var GoomaMonster;
 var MarioBullets = [];
 var fly_running;
 var flyMonster;
+let backgroundImage;
 
 window.preload = () => {
   mario_running = loadAnimation("Capture1.png","Capture3.png","Capture4.png");
   Gooma_running = loadAnimation("776e9795421d4a36e17e34bfb1c935e6oFf0FiO7qBS9Nlkn-0.png", "776e9795421d4a36e17e34bfb1c935e6oFf0FiO7qBS9Nlkn-1.png", "776e9795421d4a36e17e34bfb1c935e6oFf0FiO7qBS9Nlkn-3.png", "776e9795421d4a36e17e34bfb1c935e6oFf0FiO7qBS9Nlkn-4.png", "776e9795421d4a36e17e34bfb1c935e6oFf0FiO7qBS9Nlkn-5.png");
   fly_running = loadAnimation("a88572578d16f7b00971c949aecc5812_w200-0.png", "a88572578d16f7b00971c949aecc5812_w200-1.png", "a88572578d16f7b00971c949aecc5812_w200-2.png", "a88572578d16f7b00971c949aecc5812_w200-3.png", "a88572578d16f7b00971c949aecc5812_w200-4.png", "a88572578d16f7b00971c949aecc5812_w200-5.png", "a88572578d16f7b00971c949aecc5812_w200-6.png", "a88572578d16f7b00971c949aecc5812_w200-7.png");
+  backgroundImage = loadImage('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/6a04ce34-39a0-48c1-8b82-366b00b37586/ddtioa1-1115e6df-f611-4fd3-8329-ef2ec69e635f.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzZhMDRjZTM0LTM5YTAtNDhjMS04YjgyLTM2NmIwMGIzNzU4NlwvZGR0aW9hMS0xMTE1ZTZkZi1mNjExLTRmZDMtODMyOS1lZjJlYzY5ZTYzNWYuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.N7h948XXIkP3vLn3b5mzfcSXphCN8ksvqv03vpXLKow');
 };
 window.setup= () => {
   isGameOver = false;
@@ -49,7 +51,7 @@ window.setup= () => {
 };
 window.draw = () => {
   if (isGameOver) {
-    background(0);
+    background(backgroundImage);
     fill(255);
     textAlign(CENTER);
     text('Your score was: ' + score, width/2, height/2);
@@ -58,8 +60,12 @@ window.draw = () => {
       width/2,
       height/2 - 100
     );
-    mario.remove();
-    // obstacleSprites.remove();
+    // mario.visible = false;
+    mario.visible = false;
+    mario.velocity.x = 0;
+    mario.velocity.y = 0;
+    mario.position.x = 50;
+    mario.position.y = height-90;
     GoomaMonster.remove();
     groundSprites.remove();
     flyMonster.remove();
@@ -68,6 +74,8 @@ window.draw = () => {
       MarioBullets[i].remove();
     }
     if (mouseIsPressed) {
+      
+      console.log("click");
       isGameOver = false;
       score = 0;
       background(150, 200, 250);
@@ -82,13 +90,15 @@ window.draw = () => {
         );
         groundSprites.add(groundSprite);
       }
-      mario = createSprite(50,height-90,50,50);
-      mario.addAnimation("running", mario_running);
-      mario.scale = 0.5;
+      // mario = createSprite(50,height-90,50,50);
+      // mario.addAnimation("running", mario_running);
+      // mario.scale = 0.5;
       // Reset the game variables
+      mario.visible = true;
       score = 3;
-      isGameOver = false;
+      
     }
+    // noLoop();
   } else {
     background(150, 200, 250);
     mario.overlap(groundSprites, over);
