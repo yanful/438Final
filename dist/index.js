@@ -7,7 +7,6 @@ var GRAVITY = 2;
 var numGroundSprites;
 var mario, mario_running;
 var JUMP = -10;
-// var obstacleSprites;
 var isGameOver;
 var score;
 var Gooma_running;
